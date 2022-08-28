@@ -124,12 +124,9 @@ namespace PycApi.Controllers
         [HttpGet("GetContainerInGroup")]
         public IActionResult GetContainerInGroup(int id, int count)
         {
-            //  Yukaridaki containerArrayini list<container> tanimlayip sonuna da ToList() denedin mi
-            // object [] containerArray = { containerSession.entity.Where(x => x.VehicleId == id) };
-            list < Container > = [ containerSession.entity.Where(x => x.VehicleId == id) ];
-            var results = containerArray.Select((x, i) => new { Key = i % count, Value = x })
-                .GroupBy(x => x.Key, x => x.Value).ToList();
-            
+          List < Container > containerlist = containerSession.entity.Where(x => x.VehicleId == id).ToList();
+            var results = containerlist.Select((x, i) => new { Key = i % count, Value = x })
+                .GroupBy(x => x.Key, x => x.Value).ToList();          
             return Ok(results);
         }
         
